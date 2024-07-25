@@ -1,4 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
+import { Platform } from 'expo-modules-core';
 
 import ExpoFontLoader from '../ExpoFontLoader';
 import * as Font from '../Font';
@@ -13,7 +14,9 @@ describe('useFonts', () => {
   };
 
   beforeAll(() => {
-    ExpoFontLoader.loadedFonts = [];
+    if (Platform.OS !== 'web') {
+      ExpoFontLoader.loadedFonts = [];
+    }
   });
 
   const loadAsyncSpy = jest.spyOn(Font, 'loadAsync').mockResolvedValue();
